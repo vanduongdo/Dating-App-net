@@ -2,6 +2,7 @@ using System;
 using API.Data;
 using API.Enities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
@@ -16,17 +17,17 @@ public class UsersController(DataContext context) : ControllerBase
     // }
 
     [HttpGet]
-    public ActionResult<IEnumerable<AppUser>> GetUsers()
+    public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
-        var users = context.Users.ToList();
+        var users = await context.Users.ToListAsync();
 
         return users;
     }
 
     [HttpGet("{id:int}")]
-    public ActionResult<AppUser> GetUser(int id)
+    public async Task<ActionResult<AppUser>> GetUser(int id) // ActionResult<AppUser> is a generic type, it can return any type of data, Task so it can return async data
     {
-        var user = context.Users.Find(id);
+        var user = await context.Users.FindAsync(id);
 
         if (user == null)
             return NotFound();
