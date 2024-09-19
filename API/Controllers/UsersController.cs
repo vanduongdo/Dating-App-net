@@ -1,11 +1,13 @@
 using System;
 using API.Data;
 using API.Enities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers;
 
+[Authorize]
 public class UsersController(DataContext context) : BaseApiController
 {
     // private readonly DataContext _context = context;
@@ -13,7 +15,7 @@ public class UsersController(DataContext context) : BaseApiController
     // {
     //     _context = context;
     // }
-
+    [AllowAnonymous]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
     {
@@ -22,6 +24,7 @@ public class UsersController(DataContext context) : BaseApiController
         return users;
     }
 
+    [Authorize]
     [HttpGet("{id:int}")]
     public async Task<ActionResult<AppUser>> GetUser(int id) // ActionResult<AppUser> is a generic type, it can return any type of data, Task so it can return async data
     {
