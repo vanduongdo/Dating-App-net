@@ -2,21 +2,43 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Dating App</a>
 
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-            <li class="nav-item">
-                <a class="nav-link active">Matches</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active">Lists</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active">Messages</a>
-            </li>
-        </ul>
-        <form #loginForm class="d-flex">
-            <input class="form-control me-2" type="text" placeholder="Username">
-            <input class="form-control me-2" type="password" placeholder="Password">
-            <button class="btn btn-success" type="submit">Login</button>
-        </form>
+        @if (loggedIn) {
+            <ul class="navbar-nav me-auto mb-2 mb-md-0"> <!-- not use ng from angular 17 and onwards -->
+                <li class="nav-item">
+                    <a class="nav-link active">Matches</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active">Lists</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active">Messages</a>
+                </li>
+            </ul>
+        }
+
+        <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button> -->
+
+        @if(!loggedIn) {
+            <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex">
+                <!-- //template reference variable #loginForm="ngForm"? -->
+                <input class="form-control me-2" name="username" [(ngModel)]="model.username" type="text"
+                    placeholder="Username">
+                <input class="form-control me-2" name="password" [(ngModel)]="model.password" type="password"
+                    placeholder="Password">
+                <button class="btn btn-success" type="submit">Login</button>
+            </form>
+        } @else {
+            <div class="dropdown" dropdown>
+                <a href="#" class="dropdown-toggle text-light" dropdownToggle>Welcome user</a>
+                <ul *dropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a href="#" class="dropdown-item">My Profile</a></li>
+                    <li><a href="#" class="dropdown-item">Edit Profile</a></li>
+                    <div class="dropdown-divider"></div>
+                    <li><a href="#" class="dropdown-item" (click)="logout()">Logout</a></li>
+                </ul>
+            </div>
+        }
     </div>
 </nav>
