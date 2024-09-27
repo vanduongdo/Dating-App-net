@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Dating App</a>
 
-        @if (loggedIn) {
+        @if (accountService.currentUser()) {
             <ul class="navbar-nav me-auto mb-2 mb-md-0"> <!-- not use ng from angular 17 and onwards -->
                 <li class="nav-item">
                     <a class="nav-link active">Matches</a>
@@ -20,7 +20,7 @@
             <span class="navbar-toggler-icon"></span>
         </button> -->
 
-        @if(!loggedIn) {
+        @if(!accountService.currentUser()) {
             <form #loginForm="ngForm" (ngSubmit)="login()" class="d-flex">
                 <!-- //template reference variable #loginForm="ngForm"? -->
                 <input class="form-control me-2" name="username" [(ngModel)]="model.username" type="text"
