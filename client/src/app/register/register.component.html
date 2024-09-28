@@ -6,6 +6,17 @@
             placeholder="Username">
         <label for="floatingInput">Username</label>
     </div>
+
+    <!-- <div class="mb-3">
+        <label>Who is your favourate user</label>
+        <select class="form-select">
+            userFromHomeComponent no signal // This is the input property from the parent component 
+            @for (user of userFromHomeComponent(); track $index) {
+                <option value="{{user.id}}">{{user.userName}}</option>
+            }
+        </select>
+    </div> -->
+
     <div class="mb-3 form-floating">
         <input type="password" class="form-control" name="password" [(ngModel)]="model.password" required
             placeholder="Password">
