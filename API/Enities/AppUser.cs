@@ -1,4 +1,5 @@
 using System;
+using API.Extensions;
 
 namespace API.Enities;
 
@@ -18,5 +19,9 @@ public class AppUser
     public string? LookingFor { get; set; }
     public required string City { get; set; }
     public required string Country { get; set; }
-    public List<Photos> Photos { get; set; }
+    public List<Photo> Photos { get; set; } = [];
+
+    // public int GetAge() {
+    //     return DateOfBirth.CalculateAge();
+    // }
 }
