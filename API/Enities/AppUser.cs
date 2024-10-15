@@ -21,7 +21,9 @@ public class AppUser
     public required string Country { get; set; }
     public List<Photo> Photos { get; set; } = [];
 
-    // public int GetAge() {
+    // public int GetAge() { // GetAge is a method that returns the age of the user
+    // but memberDto has a property Age, so we can use a method in AutoMapperProfiles.cs, 
+    // query the database and calculate the age of the user, it will get all the fialds from the database because we are using ProjectTo<MemberDto>
     //     return DateOfBirth.CalculateAge();
     // }
 }

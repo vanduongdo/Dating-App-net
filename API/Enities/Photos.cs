@@ -12,6 +12,7 @@ public class Photo
 
     // Navigation properties
     public int AppUserId { get; set; }
-    public AppUser AppUser { get; set; } = null!; // Navigation property, it's a reference to the AppUser entity
+    public AppUser AppUser { get; set; } = null!; 
+    // Navigation property, it's a reference to the AppUser entity
     // it will be a possible object cycle was detected, so we need to ignore it
 }

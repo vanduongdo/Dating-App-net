@@ -12,12 +12,18 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
 {
     public async Task<MemberDto?> GetMemberAsync(string username)
     {
-        return await context.Users.Where(x => x.UserName == username).ProjectTo<MemberDto>(mapper.ConfigurationProvider).SingleOrDefaultAsync();
+        return await context.Users
+            .Where(x => x.UserName == username)
+            .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
+            .SingleOrDefaultAsync();
+            // ProjectTo is a method that allows us to project our query into a different type
     }
 
     public async Task<IEnumerable<MemberDto>> GetMembersAsync()
     {
-        return await context.Users.ProjectTo<MemberDto>(mapper.ConfigurationProvider).ToListAsync();
+        return await context.Users
+            .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 
     public async Task<AppUser?> GetUserByIdAsync(Guid id)
@@ -27,7 +33,9 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
 
     public async Task<AppUser?> GetUserByUserNameAsync(string username)
     {
-       return await context.Users.Include(x => x.Photos).SingleOrDefaultAsync(x => x.UserName == username);
+        return await context.Users
+            .Include(x => x.Photos)
+            .SingleOrDefaultAsync(x => x.UserName == username);
     }
 
     public async Task<IEnumerable<AppUser>> GetUsersAsync()
