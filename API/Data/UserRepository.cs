@@ -35,7 +35,7 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
     {
         return await context.Users
             .Include(x => x.Photos)
-            .SingleOrDefaultAsync(x => x.UserName == username);
+             .SingleOrDefaultAsync(x => x.UserName == username);
     }
 
     public async Task<IEnumerable<AppUser>> GetUsersAsync()
