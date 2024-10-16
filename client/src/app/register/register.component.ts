@@ -15,7 +15,7 @@ export class RegisterComponent {
   // @Output() cancelRegister = new EventEmitter(); // version < 17.3
   private accountService = inject(AccountService);
   private toastr = inject(ToastrService);
-  userFromHomeComponent = input.required<any>(); // version >= 17.3
+  // userFromHomeComponent = input.required<any>(); // version >= 17.3
   cancelRegister = output<boolean>();
   model: any = {};
 
