@@ -10,7 +10,7 @@ import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
   standalone: true,
   imports: [TabsModule, GalleryModule],
   templateUrl: './member-detail.component.html',
-  styleUrl: './member-detail.component.css'
+  styleUrl: './member-detail.component.css',
 })
 export class MemberDetailComponent implements OnInit {
   private memberService = inject(MembersService);
@@ -19,7 +19,7 @@ export class MemberDetailComponent implements OnInit {
   images: GalleryItem[] = [];
 
   ngOnInit(): void {
-      this.loadMember();
+    this.loadMember();
   }
 
   loadMember() {
@@ -28,13 +28,12 @@ export class MemberDetailComponent implements OnInit {
       return;
     }
     this.memberService.getMember(username).subscribe({
-      next: member => {
+      next: (member) => {
         this.member = member;
-        member.photos.map(photo => {
+        member.photos.map((photo) => {
           this.images.push(new ImageItem({ src: photo.url, thumb: photo.url }));
-        }
-        )
-      }
+        });
+      },
     });
   }
 }
