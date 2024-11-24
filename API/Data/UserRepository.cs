@@ -16,7 +16,7 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
             .Where(x => x.UserName == username)
             .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
             .SingleOrDefaultAsync();
-            // ProjectTo is a method that allows us to project our query into a different type
+        // ProjectTo is a method that allows us to project our query into a different type
     }
 
     public async Task<IEnumerable<MemberDto>> GetMembersAsync()
