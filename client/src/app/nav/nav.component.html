@@ -34,7 +34,9 @@
         </form>
         } @else {
         <div class="dropdown" dropdown>
-            <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{accountService.currentUser()?.username | titlecase}} </a>
+            <img src="{{accountService.currentUser()?.photoUrl || './assets/user.png'}}" alt="user main image">
+            <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{accountService.currentUser()?.username |
+                titlecase}} </a>
             <ul *dropdownMenu class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <!-- <li><a href="#" class="dropdown-item">My Profile</a></li> -->
                 <li><a routerLink="/member/edit" class="dropdown-item">Edit Profile</a></li>
