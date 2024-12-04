@@ -100,6 +100,7 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
         return BadRequest("Failed to set main photo");
     }
 
+    [HttpDelete("delete-photo/{photoId:int}")]
     public async Task<ActionResult> DeletePhoto(int photoId)
     {
         var user = await userRepository.GetUserByUserNameAsync(User.GetUsername());

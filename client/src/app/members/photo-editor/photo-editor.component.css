@@ -1,3 +1,7 @@
 .nv-file-over {
     border: dotted 3px red
 }
+
+.img-thumbnail{ 
+    width: 100%;
+}

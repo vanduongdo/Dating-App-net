@@ -5,6 +5,7 @@ import { FileUploader, FileUploadModule } from 'ng2-file-upload';
 import { AccountService } from '../../_services/account.service';
 import { environment } from '../../../environments/environment';
 import { MembersService } from '../../_services/members.service';
+import { Photo } from '../../_models/photo';
 
 @Component({
   selector: 'app-photo-editor',
@@ -30,9 +31,19 @@ export class PhotoEditorComponent implements OnInit {
     this.hasBaseDropZoneOver = e;
   }
 
-  setMainPhoto(photo: any) {
+  deletePhoto(photo: Photo) {
+    this.memberService.deletePhoto(photo).subscribe({
+      next: () => {
+        const updatedMember = { ...this.member() };
+        updatedMember.photos = updatedMember.photos.filter(x => x.id !== photo.id);
+        this.memberChange.emit(updatedMember);
+      },
+    });
+  }
+
+  setMainPhoto(photo: Photo) {
     this.memberService.setMainPhoto(photo).subscribe({
-      next: _ => {
+      next: (_) => {
         const user = this.accoubtService.currentUser();
         if (user) {
           user.photoUrl = photo.url;
@@ -46,7 +57,7 @@ export class PhotoEditorComponent implements OnInit {
           if (p.id === photo.id) p.isMain = true;
         });
         this.memberChange.emit(updatedMember);
-      }
+      },
     });
   }
 
