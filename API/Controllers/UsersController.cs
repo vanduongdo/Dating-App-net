@@ -72,16 +72,18 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
             PublicId = result.PublicId
         };
 
+        if (user.Photos.Count == 0) photo.IsMain = true;
+
         user.Photos.Add(photo);
 
-        if (await userRepository.SaveAllAsync()) 
-            return CreatedAtAction("GetUser", new {username = user.UserName}, mapper.Map<PhotoDto>(photo));
+        if (await userRepository.SaveAllAsync())
+            return CreatedAtAction("GetUser", new { username = user.UserName }, mapper.Map<PhotoDto>(photo));
 
         return BadRequest("Problem adding photo");
-    } 
+    }
 
     [HttpPut("set-main-photo/{photoId:int}")]
-    public async Task<ActionResult> SetMainPhoto(int photoId) 
+    public async Task<ActionResult> SetMainPhoto(int photoId)
     {
         var user = await userRepository.GetUserByUserNameAsync(User.GetUsername());
 
