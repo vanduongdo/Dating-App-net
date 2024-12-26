@@ -26,4 +26,7 @@ public class AppUser
     // query the database and calculate the age of the user, it will get all the fialds from the database because we are using ProjectTo<MemberDto>
     //     return DateOfBirth.CalculateAge();
     // }
+
+    public List<UserLike> LikeByUsers { get; set; } = [];
+    public List<UserLike> LikedUsers { get; set; } = [];
 }
