@@ -34,8 +34,8 @@
         </div>
     </div>
     <div class="col-8">
-        <tabset class="member-tabset">
-            <tab heading='About {{member.knownAs}}'>
+        <tabset class="member-tabset" #memberTabs>
+            <tab heading='About {{member.knownAs}}' (selectTab)="onTabActivated($event)">
                 <h4>Description</h4>
                 <p>{{member.introduction}}</p>
                 <h4>Looking for</h4>
@@ -50,8 +50,8 @@
                 <gallery [items]="images" [itemAutosize]="true" class="gallery" thumbPosition="bottom"></gallery>
                 }
             </tab>
-            <tab heading="Messages">
-                <p>Messages will go here</p>
+            <tab heading="Messages" (selectTab)="onTabActivated($event)">
+                <app-member-messages [username]="member.userName" [messages]="messages"></app-member-messages>
             </tab>
         </tabset>
     </div>
