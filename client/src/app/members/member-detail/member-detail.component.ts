@@ -24,17 +24,35 @@ import { MessageService } from '../../_services/message.service';
   styleUrl: './member-detail.component.css',
 })
 export class MemberDetailComponent implements OnInit {
-  @ViewChild('memberTabs') memberTabs?: TabsetComponent; // why ? have to do this ? This is necessary because the TabsetComponent is only available in the template, not in the class.
+  @ViewChild('memberTabs', { static: true /* to make sure the tab is available */ }) memberTabs?: TabsetComponent; // why ? have to do this ? This is necessary because the TabsetComponent is only available in the template, not in the class.
+  // so we need to use the ViewChild decorator to access the TabsetComponent, but member available only in the template and tab will render in the template
   private messageService = inject(MessageService);
   private memberService = inject(MembersService);
   private route = inject(ActivatedRoute);
-  member?: Member;
+  member: Member = {} as Member;
   images: GalleryItem[] = [];
   activeTab?: TabDirective;
   messages: Message[] = [];
 
   ngOnInit(): void {
-    this.loadMember();
+    /* static: true to make sure the tab is available in the template */
+    this.route.data.subscribe({
+      next: (data) => {
+        this.member = data['member'];
+        this.member &&
+          this.member.photos.map((photo) => {
+            this.images.push(
+              new ImageItem({ src: photo.url, thumb: photo.url })
+            );
+          });
+      },
+    });
+
+    this.route.queryParams.subscribe({
+      next: (params) => {
+        params['tab'] && this.selectTab(params['tab']);
+      },
+    });
   }
 
   onTabActivated(data: TabDirective) {
@@ -50,18 +68,31 @@ export class MemberDetailComponent implements OnInit {
     }
   }
 
-  loadMember() {
-    const username = this.route.snapshot.paramMap.get('username');
-    if (!username) {
-      return;
-    }
-    this.memberService.getMember(username).subscribe({
-      next: (member) => {
-        this.member = member;
-        member.photos.map((photo) => {
-          this.images.push(new ImageItem({ src: photo.url, thumb: photo.url }));
-        });
-      },
-    });
+  onUpdateMessages(event: Message) {
+    this.messages.push(event);
   }
+
+  selectTab(heading: string) {
+    if (this.memberTabs) {
+      const messageTab = this.memberTabs.tabs.find(
+        (x) => x.heading === heading
+      );
+      if (messageTab) messageTab.active = true;
+    }
+  }
+
+  // loadMember() {
+  //   const username = this.route.snapshot.paramMap.get('username');
+  //   if (!username) {
+  //     return;
+  //   }
+  //   this.memberService.getMember(username).subscribe({
+  //     next: (member) => {
+  //       this.member = member;
+  //       member.photos.map((photo) => {
+  //         this.images.push(new ImageItem({ src: photo.url, thumb: photo.url }));
+  //       });
+  //     },
+  //   });
+  // }
 }
