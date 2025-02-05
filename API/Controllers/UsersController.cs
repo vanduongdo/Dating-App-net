@@ -22,7 +22,6 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
     //     _context = context;
     // }
 
-
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
     {
@@ -34,7 +33,6 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
         return Ok(users);
     }
 
-    [Authorize]
     [HttpGet("{username}")] // api/users/username
     public async Task<ActionResult<MemberDto>> GetUser(string username) // ActionResult<AppUser> is a generic type, it can return any type of data, Task so it can return async data
     {
