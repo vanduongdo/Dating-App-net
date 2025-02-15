@@ -15,23 +15,41 @@ export class UserManagementComponent implements OnInit {
   private adminService = inject(AdminService);
   private modalService = inject(BsModalService);
   users: User[] = [];
-  bsMdalRef: BsModalRef<RolesModalComponent> =
+  bsModalRef: BsModalRef<RolesModalComponent> =
     new BsModalRef<RolesModalComponent>();
 
   ngOnInit(): void {
     this.getUsersWithRoles();
   }
 
-  openRolesModal() {
+  openRolesModal(user: User) {
     const initialState: ModalOptions = {
       class: 'modal-lg',
       initialState: {
         title: 'User Roles',
-        list: ['Admin', 'Moderator', 'Member'],
+        username: user.username,
+        selectedRoles: [...user.roles],
+        availableRoles: ['Admin', 'Moderator', 'Member'],
+        users: this.users,
+        rolesUpdated: false,
       },
     };
 
-    this.bsMdalRef = this.modalService.show(RolesModalComponent, initialState);
+    this.bsModalRef = this.modalService.show(RolesModalComponent, initialState);
+    this.bsModalRef.onHidden?.subscribe({
+      next: () => {
+        if (this.bsModalRef.content && this.bsModalRef.content.rolesUpdated) {
+          const selectedRoles = this.bsModalRef.content.selectedRoles;
+          this.adminService
+            .updateUserRoles(user.username, selectedRoles)
+            .subscribe({
+              next: (roles) => {
+                user.roles = roles;
+              },
+            });
+        }
+      },
+    });
   }
 
   getUsersWithRoles() {
