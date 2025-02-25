@@ -67,8 +67,6 @@ public class MessageHub(IMessageRepository messageRepository, IUserRepository us
         {
             await Clients.Group(groupName).SendAsync("NewMessage", mapper.Map<MessageDto>(message));
         }
-
-        throw new HubException("Fail to save message");
     }
 
     private async Task<bool> AddToGroup(string groupName)
